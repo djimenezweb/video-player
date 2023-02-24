@@ -5,11 +5,25 @@
     <!-- PON UN FAVICON!!! -->
     <link rel="icon" type="image/svg+xml" href="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- CAMBIA EL TITLE!!! -->
-    <title>Vite Template</title>
+    <title>Video Player</title>
   </head>
   <body>
-    <img src="./assets/images/anubis.jpg" width="500px" alt="anubis" />
+    <div class="videoplayer">
+      <video src="assets/videos/video1.mp4" id="video"></video>
+      <p class="duration-info" id="duration-info"></p>
+      <div class="controls">
+        <button class="button play" id="play-button">Play/Pause</button>
+        <button class="button" id="rew-button">Rew</button>
+        <button class="button" id="fwd-button">Fwd</button>
+        <div class="progress-bar" id="progress-bar"></div>
+        <button class="button volume" id="quieter-button">-</button>
+        <span id="volume-info">100%</span>
+        <button class="button volume" id="louder-button">+</button>
+        <button class="button speed" id="slower-button">-</button>
+        <span id="speed-info">1x</span>
+        <button class="button speed" id="faster-button">+</button>
+      </div>
+    </div>
     <script type="module" src="./js/index.js"></script>
   </body>
 </html>

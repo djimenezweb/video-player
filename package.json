@@ -19,5 +19,9 @@
     "vite": "^4.0.0",
     "vite-plugin-image-optimizer": "^1.0.7",
     "vite-plugin-minify": "^1.5.2"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "moment-duration-format": "^2.3.2"
   }
 }
