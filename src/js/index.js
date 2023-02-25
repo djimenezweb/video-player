@@ -28,10 +28,7 @@ const printDurationInfo = () => {
   const date = new Date(0);
   date.setSeconds(videoElement.currentTime);
   const timeString = date.toISOString().substr(11, 8);
-  console.log(timeString);
-
   durationInfoElement.textContent = timeString;
-  //durationInfoElement.textContent = `${moment.duration(videoElement.currentTime, 'seconds').format('h:mm:ss')} / 00:${Math.floor(videoElement.duration)}`;
 };
 
 const changeTime = time => {
@@ -52,12 +49,12 @@ louderButton.addEventListener('click', () => {
 
 fasterButton.addEventListener('click', () => {
   videoElement.playbackRate = videoElement.playbackRate * 2;
-  speedInfoElement.textContent = videoElement.playbackRate + 'x';
+  speedInfoElement.textContent = videoElement.playbackRate + '×';
 });
 
 slowerButton.addEventListener('click', () => {
   videoElement.playbackRate = videoElement.playbackRate / 2;
-  speedInfoElement.textContent = videoElement.playbackRate + 'x';
+  speedInfoElement.textContent = videoElement.playbackRate + '×';
 });
 
 videoElement.addEventListener('click', () => {
