@@ -31,6 +31,18 @@ const printDurationInfo = () => {
   durationInfoElement.textContent = timeString;
 };
 
+const printVolume = () => {
+  volumeInfoElement.textContent = Math.floor(videoElement.volume * 100) + '%';
+};
+
+const printSpeed = () => {
+  speedInfoElement.textContent = videoElement.playbackRate + '×';
+};
+
+const playPause = () => {
+  videoElement.paused ? videoElement.play() : videoElement.pause();
+};
+
 const changeTime = time => {
   videoElement.currentTime = videoElement.currentTime + time;
 };
@@ -38,37 +50,37 @@ const changeTime = time => {
 quieterButton.addEventListener('click', () => {
   if (videoElement.volume < 0.1) return;
   videoElement.volume = videoElement.volume - 0.1;
-  volumeInfoElement.textContent = Math.floor(videoElement.volume * 100) + '%';
+  printVolume();
 });
 
 louderButton.addEventListener('click', () => {
   if (videoElement.volume >= 1) return;
   videoElement.volume = videoElement.volume + 0.1;
-  volumeInfoElement.textContent = Math.floor(videoElement.volume * 100) + '%';
+  printVolume();
 });
 
 fasterButton.addEventListener('click', () => {
   videoElement.playbackRate = videoElement.playbackRate * 2;
-  speedInfoElement.textContent = videoElement.playbackRate + '×';
+  printSpeed();
 });
 
 slowerButton.addEventListener('click', () => {
   videoElement.playbackRate = videoElement.playbackRate / 2;
-  speedInfoElement.textContent = videoElement.playbackRate + '×';
+  printSpeed();
 });
 
 videoElement.addEventListener('click', () => {
-  videoElement.paused ? videoElement.play() : videoElement.pause();
+  playPause();
 });
 
 playButton.addEventListener('click', () => {
-  videoElement.paused ? videoElement.play() : videoElement.pause();
+  playPause();
 });
 
 progressBarElement.addEventListener('click', e => {
   videoElement.currentTime = (e.offsetX / e.target.clientWidth) * videoElement.duration;
   rootStyles.setProperty('--current-time', `${((e.offsetX - 8) * 100) / e.target.clientWidth}%`);
-  videoElement.paused ? videoElement.pause() : videoElement.play();
+  playPause();
 });
 
 rewButton.addEventListener('click', () => changeTime(-5));
