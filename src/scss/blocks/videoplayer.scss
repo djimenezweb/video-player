@@ -5,56 +5,8 @@
   position: relative;
 }
 
-.overlay {
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &--left {
-    inset: 0 85% 0 0;
-
-    &:hover {
-      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent);
-    }
-  }
-
-  &--right {
-    inset: 0 0 0 85%;
-    &:hover {
-      background-image: linear-gradient(to left, rgba(0, 0, 0, 0.7), transparent);
-    }
-  }
-
-  &__info {
-    color: white;
-    font-size: 3rem;
-    opacity: 0;
-  }
-
-  &__info--show {
-    opacity: 1;
-    animation-name: fade-out;
-    animation-delay: 500ms;
-    animation-duration: 500ms;
-    animation-fill-mode: forwards;
-  }
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-}
-
-.videoplayer:hover .controls {
+.videoplayer:hover .controls,
+.overlay--show ~ .controls {
   opacity: 1;
 }
 
@@ -96,7 +48,7 @@
   content: '';
   position: absolute;
   top: -0.3rem;
-  right: -0.5rem;
+  right: 0;
   width: 1rem;
   height: 1rem;
   background-color: rgb(136, 33, 33);

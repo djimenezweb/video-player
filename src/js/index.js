@@ -13,6 +13,7 @@ document.body.append(img); */
 const videoElement = document.getElementById('video');
 const overlayLeftElement = document.getElementById('overlay-left');
 const overlayRightElement = document.getElementById('overlay-right');
+const overlayPauseElement = document.getElementById('overlay-pause');
 const playButton = document.getElementById('play-button');
 const progressContainerElement = document.getElementById('progress-container');
 const rewButton = document.getElementById('rew-button');
@@ -25,6 +26,8 @@ const fasterButton = document.getElementById('faster-button');
 const speedInfoElement = document.getElementById('speed-info');
 const durationInfoElement = document.getElementById('duration-info');
 const rootStyles = document.documentElement.style;
+
+let savedTime = localStorage.getItem('time');
 
 // FUNCIONES
 
@@ -54,7 +57,16 @@ const printSpeed = () => {
 };
 
 const playPause = () => {
-  videoElement.paused ? videoElement.play() : videoElement.pause();
+  if (videoElement.paused) {
+    playButton.firstElementChild.src = 'assets/images/pause.svg';
+    overlayPauseElement.classList.remove('overlay--show');
+    videoElement.play();
+  } else {
+    playButton.firstElementChild.src = 'assets/images/play.svg';
+    overlayPauseElement.classList.add('overlay--show');
+    videoElement.pause();
+  }
+  //videoElement.paused ? videoElement.play() : videoElement.pause();
 };
 
 const changeTime = time => {
@@ -74,13 +86,11 @@ const animate = element => {
 volumeDownButton.addEventListener('click', () => {
   if (videoElement.volume < 0.1) return;
   changeVolume(-0.1);
-  //videoElement.volume = videoElement.volume - 0.1;
 });
 
 volumeUpButton.addEventListener('click', () => {
   if (videoElement.volume >= 1) return;
   changeVolume(+0.1);
-  //videoElement.volume = videoElement.volume + 0.1;
 });
 
 fasterButton.addEventListener('click', () => {
@@ -120,9 +130,13 @@ overlayRightElement.addEventListener('click', () => {
 });
 
 videoElement.addEventListener('timeupdate', () => {
-  rootStyles.setProperty('--current-time', `${(videoElement.currentTime * 100) / videoElement.duration}%`);
+  if ((videoElement.currentTime * 100) / videoElement.duration > 2) {
+    rootStyles.setProperty('--current-time', `${(videoElement.currentTime * 100) / videoElement.duration}%`);
+  }
   printDurationInfo();
   localStorage.setItem('time', videoElement.currentTime);
 });
 
 videoElement.addEventListener('loadedmetadata', printDurationInfo);
+
+if (savedTime) videoElement.currentTime = savedTime;
