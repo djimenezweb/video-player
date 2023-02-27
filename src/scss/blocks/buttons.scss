@@ -8,6 +8,12 @@
   box-shadow: inset -2px -2px 0.5rem rgba(0, 0, 0, 0.3);
 }
 
+.button:hover {
+  background-color: #ddd;
+}
+
 .speed {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }

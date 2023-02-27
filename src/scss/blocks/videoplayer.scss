@@ -5,6 +5,55 @@
   position: relative;
 }
 
+.overlay {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--left {
+    inset: 0 85% 0 0;
+
+    &:hover {
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent);
+    }
+  }
+
+  &--right {
+    inset: 0 0 0 85%;
+    &:hover {
+      background-image: linear-gradient(to left, rgba(0, 0, 0, 0.7), transparent);
+    }
+  }
+
+  &__info {
+    color: white;
+    font-size: 3rem;
+    opacity: 0;
+  }
+
+  &__info--show {
+    opacity: 1;
+    animation-name: fade-out;
+    animation-delay: 500ms;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
 .videoplayer:hover .controls {
   opacity: 1;
 }
@@ -17,13 +66,14 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   color: white;
   opacity: 0;
   transition: opacity 250ms;
+  z-index: 100;
 }
 
-.progress-bar {
+.progress-container {
   width: 100%;
   height: 0.5rem;
   background-color: hsl(0, 50%, 25%);
@@ -31,35 +81,35 @@
   border-radius: 1rem;
 }
 
-.progress-bar::before,
+.progress-bar {
+  width: var(--current-time);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0.5rem;
+  border-radius: 1rem;
+  background-color: hsl(0, 70%, 53%);
+  pointer-events: none;
+}
+
 .progress-bar::after {
   content: '';
   position: absolute;
+  top: -0.3rem;
+  right: -0.5rem;
   width: 1rem;
   height: 1rem;
-}
-
-.progress-bar::before {
-  height: 0.5rem;
-  width: var(--current-time);
-  background-color: hsl(0, 70%, 53%);
-  left: 0;
-  top: 0;
-  border-radius: 1rem;
-}
-
-.progress-bar::after {
   background-color: rgb(136, 33, 33);
   border: 2px solid white;
   border-radius: 50%;
-  left: var(--current-time);
-  top: -0.25rem;
 }
 
-.duration-info {
-  position: absolute;
-  bottom: 1rem;
-  right: 0;
-  padding: 1em;
-  color: white;
+.volume-info {
+  text-align: center;
+  min-width: 42px;
+}
+
+.speed-info {
+  text-align: center;
+  min-width: 28px;
 }

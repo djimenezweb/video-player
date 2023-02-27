@@ -11,18 +11,22 @@ img.src = CatImage;
 document.body.append(img); */
 
 const videoElement = document.getElementById('video');
+const overlayLeftElement = document.getElementById('overlay-left');
+const overlayRightElement = document.getElementById('overlay-right');
 const playButton = document.getElementById('play-button');
-const progressBarElement = document.getElementById('progress-bar');
+const progressContainerElement = document.getElementById('progress-container');
 const rewButton = document.getElementById('rew-button');
 const fwdButton = document.getElementById('fwd-button');
-const quieterButton = document.getElementById('quieter-button');
-const louderButton = document.getElementById('louder-button');
+const volumeDownButton = document.getElementById('volume-down-button');
+const volumeUpButton = document.getElementById('volume-up-button');
 const volumeInfoElement = document.getElementById('volume-info');
 const slowerButton = document.getElementById('slower-button');
 const fasterButton = document.getElementById('faster-button');
 const speedInfoElement = document.getElementById('speed-info');
 const durationInfoElement = document.getElementById('duration-info');
 const rootStyles = document.documentElement.style;
+
+// FUNCIONES
 
 const printDurationInfo = () => {
   const date = new Date(0);
@@ -33,6 +37,16 @@ const printDurationInfo = () => {
 
 const printVolume = () => {
   volumeInfoElement.textContent = Math.floor(videoElement.volume * 100) + '%';
+  if (Math.floor(videoElement.volume * 100) === 0) {
+    volumeDownButton.firstElementChild.src = 'assets/images/volume_off.svg';
+  } else {
+    volumeDownButton.firstElementChild.src = 'assets/images/volume_down.svg';
+  }
+};
+
+const changeVolume = step => {
+  videoElement.volume = videoElement.volume + step;
+  printVolume();
 };
 
 const printSpeed = () => {
@@ -47,16 +61,26 @@ const changeTime = time => {
   videoElement.currentTime = videoElement.currentTime + time;
 };
 
-quieterButton.addEventListener('click', () => {
+const animate = element => {
+  element.firstElementChild.classList.add('overlay__info--show');
+  const setTimeoutID = setTimeout(() => {
+    element.firstElementChild.classList.remove('overlay__info--show');
+    clearTimeout(setTimeoutID);
+  }, 1000);
+};
+
+// EVENTOS
+
+volumeDownButton.addEventListener('click', () => {
   if (videoElement.volume < 0.1) return;
-  videoElement.volume = videoElement.volume - 0.1;
-  printVolume();
+  changeVolume(-0.1);
+  //videoElement.volume = videoElement.volume - 0.1;
 });
 
-louderButton.addEventListener('click', () => {
+volumeUpButton.addEventListener('click', () => {
   if (videoElement.volume >= 1) return;
-  videoElement.volume = videoElement.volume + 0.1;
-  printVolume();
+  changeVolume(+0.1);
+  //videoElement.volume = videoElement.volume + 0.1;
 });
 
 fasterButton.addEventListener('click', () => {
@@ -77,18 +101,28 @@ playButton.addEventListener('click', () => {
   playPause();
 });
 
-progressBarElement.addEventListener('click', e => {
+progressContainerElement.addEventListener('click', e => {
   videoElement.currentTime = (e.offsetX / e.target.clientWidth) * videoElement.duration;
-  rootStyles.setProperty('--current-time', `${((e.offsetX - 8) * 100) / e.target.clientWidth}%`);
-  playPause();
+  rootStyles.setProperty('--current-time', `${(e.offsetX * 100) / e.target.clientWidth}%`);
 });
 
 rewButton.addEventListener('click', () => changeTime(-5));
 fwdButton.addEventListener('click', () => changeTime(5));
 
+overlayLeftElement.addEventListener('click', () => {
+  changeTime(-10);
+  animate(overlayLeftElement);
+});
+
+overlayRightElement.addEventListener('click', () => {
+  changeTime(10);
+  animate(overlayRightElement);
+});
+
 videoElement.addEventListener('timeupdate', () => {
   rootStyles.setProperty('--current-time', `${(videoElement.currentTime * 100) / videoElement.duration}%`);
   printDurationInfo();
+  localStorage.setItem('time', videoElement.currentTime);
 });
 
 videoElement.addEventListener('loadedmetadata', printDurationInfo);

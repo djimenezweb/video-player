@@ -9,18 +9,22 @@
   </head>
   <body>
     <div class="videoplayer">
-      <video src="assets/videos/video1.mp4" id="video"></video>
-      <p class="duration-info" id="duration-info"></p>
+      <div class="overlay overlay--left" id="overlay-left"><span class="overlay__info">-10</span></div>
+      <div class="overlay overlay--right" id="overlay-right"><span class="overlay__info">+10</span></div>
+      <video src="https://vaibhav1663.github.io/Youtube-Ambient-Mode/demo-video.mp4" id="video"></video>
       <div class="controls">
         <button class="button play" id="play-button"><img src="assets/images/play_pause.svg" alt="Play-Pause" /></button>
         <button class="button" id="rew-button"><img src="assets/images/replay_5.svg" alt="Rew" /></button>
         <button class="button" id="fwd-button"><img src="assets/images/forward_5.svg" alt="Fwd" /></button>
-        <div class="progress-bar" id="progress-bar"></div>
-        <button class="button volume" id="quieter-button"><img src="assets/images/volume_down.svg" alt="" /></button>
-        <span id="volume-info">100%</span>
-        <button class="button volume" id="louder-button"><img src="assets/images/volume_up.svg" alt="" /></button>
+        <div class="progress-container" id="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <span class="duration-info" id="duration-info"></span>
+        <button class="button volume" id="volume-down-button"><img src="assets/images/volume_down.svg" alt="" /></button>
+        <span class="volume-info" id="volume-info">100%</span>
+        <button class="button volume" id="volume-up-button"><img src="assets/images/volume_up.svg" alt="" /></button>
         <button class="button speed" id="slower-button"><img src="assets/images/arrow_right.svg" alt="" /></button>
-        <span id="speed-info">1×</span>
+        <span class="speed-info" id="speed-info">1×</span>
         <button class="button speed" id="faster-button">
           <img src="assets/images/double_arrow_right.svg" alt="" />
         </button>
