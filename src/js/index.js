@@ -1,14 +1,7 @@
-// El styles lo importamos aquí, ya se carga después al compilar todo
 import '../scss/styles.scss';
-
-/* import CatImage from '../assets/images/anubis.jpg';
-import { sayHello } from './demo.js';
-
-sayHello();
-
-const img = document.createElement('img');
-img.src = CatImage;
-document.body.append(img); */
+import pauseSvg from '../assets/images/pause.svg';
+import playSvg from '../assets/images/play.svg';
+import { changeVolume, printVolume } from './volume';
 
 const videoElement = document.getElementById('video');
 const overlayLeftElement = document.getElementById('overlay-left');
@@ -20,7 +13,6 @@ const rewButton = document.getElementById('rew-button');
 const fwdButton = document.getElementById('fwd-button');
 const volumeDownButton = document.getElementById('volume-down-button');
 const volumeUpButton = document.getElementById('volume-up-button');
-const volumeInfoElement = document.getElementById('volume-info');
 const slowerButton = document.getElementById('slower-button');
 const fasterButton = document.getElementById('faster-button');
 const speedInfoElement = document.getElementById('speed-info');
@@ -38,31 +30,17 @@ const printDurationInfo = () => {
   durationInfoElement.textContent = timeString;
 };
 
-const printVolume = () => {
-  volumeInfoElement.textContent = Math.floor(videoElement.volume * 100) + '%';
-  if (Math.floor(videoElement.volume * 100) === 0) {
-    volumeDownButton.firstElementChild.src = 'assets/images/volume_off.svg';
-  } else {
-    volumeDownButton.firstElementChild.src = 'assets/images/volume_down.svg';
-  }
-};
-
-const changeVolume = step => {
-  videoElement.volume = videoElement.volume + step;
-  printVolume();
-};
-
 const printSpeed = () => {
   speedInfoElement.textContent = videoElement.playbackRate + '×';
 };
 
 const playPause = () => {
   if (videoElement.paused) {
-    playButton.firstElementChild.src = 'assets/images/pause.svg';
+    playButton.firstElementChild.src = pauseSvg;
     overlayPauseElement.classList.remove('overlay--show');
     videoElement.play();
   } else {
-    playButton.firstElementChild.src = 'assets/images/play.svg';
+    playButton.firstElementChild.src = playSvg;
     overlayPauseElement.classList.add('overlay--show');
     videoElement.pause();
   }
@@ -86,11 +64,13 @@ const animate = element => {
 volumeDownButton.addEventListener('click', () => {
   if (videoElement.volume < 0.1) return;
   changeVolume(-0.1);
+  printVolume();
 });
 
 volumeUpButton.addEventListener('click', () => {
   if (videoElement.volume >= 1) return;
   changeVolume(+0.1);
+  printVolume();
 });
 
 fasterButton.addEventListener('click', () => {
