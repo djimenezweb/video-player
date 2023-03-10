@@ -3,7 +3,6 @@ import volumeDownSvg from '../assets/images/volume_down.svg';
 
 const videoElement = document.getElementById('video');
 const volumeDownButton = document.getElementById('volume-down-button');
-const volumeUpButton = document.getElementById('volume-up-button');
 const volumeInfoElement = document.getElementById('volume-info');
 
 const printVolume = () => {

@@ -44,7 +44,6 @@ const playPause = () => {
     overlayPauseElement.classList.add('overlay--show');
     videoElement.pause();
   }
-  //videoElement.paused ? videoElement.play() : videoElement.pause();
 };
 
 const changeTime = time => {
